@@ -3,12 +3,54 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Redirecting to Telegram...</title>
-<meta http-equiv="refresh" content="0; url=https://t.me/+UfY7u-enQmYxMGI0">
-<script>location.href="https://t.me/+UfY7u-enQmYxMGI0";</script>
+<title>Opening Telegram…</title>
+
+<!-- 1) Попытка открыть сразу приложение Telegram -->
+<script>
+  (function () {
+    var invite = "UfY7u-enQmYxMGI0";                   // твой код приглашения
+    var tgDeep = "tg://join?invite=" + invite;         // прямой deeplink в приложение
+    var webFallback = "https://t.me/+" + invite;       // fallback на веб-страницу TG
+
+    // Android intent (если webview поддерживает)
+    var intent = "intent://join?invite=" + invite +
+      "#Intent;scheme=tg;package=org.telegram.messenger;" +
+      "S.browser_fallback_url=" + encodeURIComponent(webFallback) + ";end";
+
+    // 1) Сначала пробуем tg:// (iOS/Android)
+    function openTG() { window.location.replace(tgDeep); }
+
+    // 2) Если не сработало за ~800 мс — пробуем intent:// (Android Chrome),
+    //    ещё через 800 мс — уходим на https://t.me/... (универсальный веб)
+    setTimeout(function(){ 
+      if (/Android/i.test(navigator.userAgent)) {
+        window.location.replace(intent);
+      }
+    }, 800);
+
+    setTimeout(function(){
+      window.location.replace(webFallback);
+    }, 1600);
+
+    // Запускаем сразу, чтобы клик "Открыть" в TikTok считался жестом пользователя
+    openTG();
+
+    // Повторная попытка, если webview вернулось на страницу
+    document.addEventListener("visibilitychange", function(){
+      if (!document.hidden) openTG();
+    });
+  })();
+</script>
+
+<!-- Минимальный fallback, если скрипты отключены -->
+<noscript>
+  <meta http-equiv="refresh" content="0; url=https://t.me/+UfY7u-enQmYxMGI0">
+</noscript>
 </head>
 <body>
-<p>Если не перенаправило автоматически, нажмите 
-<a href="https://t.me/+UfY7u-enQmYxMGI0">сюда</a>.</p>
+<p>Redirecting to Telegram… Если не сработало, нажмите
+  <a href="tg://join?invite=UfY7u-enQmYxMGI0">Открыть в Telegram</a> или
+  <a href="https://t.me/+UfY7u-enQmYxMGI0">через веб</a>.
+</p>
 </body>
 </html>
