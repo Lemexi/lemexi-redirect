@@ -4,88 +4,80 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LEMEXI — вступление в Telegram</title>
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#0b1220">
 <meta property="og:title" content="LEMEXI Creative Studio — Telegram">
-<meta property="og:description" content="Закрытая группа. Подайте заявку на вступление.">
+<meta property="og:description" content="Закрытая группа по одобрению. Нажмите, чтобы подать заявку.">
 <meta property="og:type" content="website">
 
 <style>
   :root{
-    --bg:#0b0b0f; --card:#121217; --fg:#f7f9fc; --muted:#98a2b3; --line:#1f2330;
-    --accent:#ff2c55; --accent2:#20d5ec;
+    --bg:#0b1220; --bg2:#0c1529; --card:#0f1b33;
+    --fg:#f4f7ff; --muted:#a9b7d6; --line:#172341;
+    --pri:#2d6cff; --pri2:#5ac8ff; /* синие тона */
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0; background:linear-gradient(180deg,var(--bg),#0d0d12 50%,var(--bg) 100%);
+    margin:0; background:linear-gradient(180deg,var(--bg),var(--bg2));
     font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     color:var(--fg); display:flex; align-items:center; justify-content:center; padding:20px;
   }
   .wrap{width:100%; max-width:900px}
-  .top-hint{display:none; background:#09090c;border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 auto 14px}
-  .badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#151521;color:#cbd5e1;font-size:12px;border:1px solid var(--line);margin-right:8px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 24px 80px rgba(0,0,0,.35)}
+  .top-hint{display:none; background:#0a1427;border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 auto 14px}
+  .badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#0c1730;color:#cfe0ff;font-size:12px;border:1px solid var(--line);margin-right:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.35)}
   h1{margin:0 0 8px;font-size:24px}
   p{margin:8px 0;color:var(--muted);line-height:1.55}
   .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-  .btn{display:inline-block;padding:14px 18px;border-radius:14px;text-decoration:none;font-weight:800;letter-spacing:.2px;border:1px solid var(--line)}
-  .btn-primary{color:#fff;border:none;background:linear-gradient(135deg,var(--accent),var(--accent) 48%,var(--accent2) 100%);box-shadow:0 8px 24px rgba(255,44,85,.35)}
-  .btn-ghost{background:#151521;color:#e6e8ee}
-  .btn-outline{background:transparent;color:#e6e8ee}
-  .ok{color:#86efac;font-size:14px;margin-top:6px}
-  .warn{color:#fda4af;font-size:14px;margin-top:6px}
+  .btn{
+    display:inline-block;padding:14px 18px;border-radius:14px;text-decoration:none;
+    font-weight:800;letter-spacing:.2px;border:1px solid var(--line)
+  }
+  .btn-primary{
+    color:#fff;border:none;
+    background:linear-gradient(135deg,var(--pri),var(--pri2));
+    box-shadow:0 8px 24px rgba(45,108,255,.35)
+  }
+  .btn-ghost{background:#0b1630;color:#e6edff}
+  .btn-outline{background:transparent;color:#e6edff}
+  .ok{color:#7ee787;font-size:14px;margin-top:6px}
+  .warn{color:#ffb3c1;font-size:14px;margin-top:6px}
   .hr{height:1px;background:var(--line);margin:16px 0}
-  .ua{font-size:12px;color:#6b7280;word-break:break-all}
-
-  /* Полноэкранный оверлей «Открыть в Safari» для iOS-вебвью */
-  #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);z-index:50}
-  .ov-box{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px}
-  .ov-card{background:#0f1014;border:1px solid #1f2330;border-radius:18px;padding:24px;max-width:560px}
-  .ov-title{margin:0 0 8px;font-size:22px}
-  .ov-text{margin:0 0 14px;color:#cbd5e1}
+  .ua{font-size:12px;color:#8aa0c8;word-break:break-all}
+  .hidden{display:none !important}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div id="topHint" class="top-hint"><span class="badge">iPhone · TikTok</span>Если не открывается — нажмите <b>⋯</b> → <b>Open in browser</b> → <b>JOIN</b>.</div>
+  <div id="topHint" class="top-hint"><span class="badge">iPhone · TikTok</span>Если ссылка не открывается: нажмите <b>⋯</b> → <b>Open in browser</b> → далее <b>JOIN</b>.</div>
 
   <div class="card">
     <span class="badge">LEMEXI</span>
     <h1>Вступить в «LEMEXI Creative Studio»</h1>
-    <p>Группа закрытая. Вступление — <b>по одобрению</b>. Нажмите кнопку ниже — откроем Telegram. Если вы просматриваете из TikTok на iPhone, страница не исчезнет: откроем всё во внешней вкладке, а здесь останется инструкция.</p>
+    <p>Группа закрытая, вступление — <b>по одобрению</b>.</p>
+    <p id="iosInappNote" class="warn hidden">
+      На iPhone внутри TikTok сейчас действует ограничение: автоматический запуск приложений заблокирован.
+      Нажмите <b>⋯</b> вверху → <b>Open in browser</b>, затем <b>JOIN</b>. Приносим извинения — это новое обновление TikTok для iOS.
+    </p>
 
+    <!-- Блок кнопок: часть скрываем по платформе -->
     <div class="row">
       <a class="btn btn-primary" id="btnOpenApp" href="#">Открыть в Telegram</a>
       <a class="btn btn-ghost"   id="btnOpenWeb" href="#">Открыть через веб (t.me)</a>
       <a class="btn btn-outline" id="btnCopy"    href="#">Скопировать ссылку</a>
     </div>
 
-    <div id="msgOk"   class="ok"   style="display:none">Ссылка скопирована — вставьте в Safari при необходимости.</div>
-    <div id="msgWarn" class="warn" style="display:none">Этот браузер блокирует автозапуски. Нажмите «Открыть в Safari», затем <b>JOIN</b>.</div>
+    <div id="msgOk"   class="ok hidden">Ссылка скопирована — вставьте в Safari при необходимости.</div>
+    <div id="msgWarn" class="warn hidden">Этот браузер блокирует автозапуски. Откройте через <b>⋯ → Open in browser</b>, затем нажмите <b>JOIN</b>.</div>
 
     <div class="hr"></div>
     <p class="ua" id="ua"></p>
   </div>
 </div>
 
-<!-- Оверлей для iOS TikTok/IG/FB -->
-<div id="overlay">
-  <div class="ov-box">
-    <div class="ov-card">
-      <h2 class="ov-title">Открыть во внешнем браузере</h2>
-      <p class="ov-text">Мы не можем автоматически выйти из встроенного браузера. Нажмите кнопку — откроем <b>в новой вкладке Safari</b> страницу Telegram, далее нажмите <b>JOIN</b>.</p>
-      <div class="row">
-        <a class="btn btn-primary" id="btnSafari" href="#">Открыть в Safari</a>
-        <a class="btn btn-ghost" id="btnTryApp" href="#">Повторить попытку в приложении</a>
-      </div>
-      <div id="ovCopied" class="ok" style="display:none">Ссылка скопирована в буфер обмена.</div>
-    </div>
-  </div>
-</div>
-
 <script>
 (function(){
-  // === Настройки под твою группу ===
+  // --- Параметры приглашения ---
   var INVITE = "UfY7u-enQmYxMGI0";
   var TG_DEEP  = "tg://join?invite=" + INVITE;      // Приложение
   var TG_WEB   = "https://t.me/+" + INVITE;         // Веб-форма JOIN
@@ -93,7 +85,7 @@
     "#Intent;scheme=tg;package=org.telegram.messenger;" +
     "S.browser_fallback_url=" + encodeURIComponent(TG_WEB) + ";end";
 
-  // === Детект окружения ===
+  // --- Детект окружения ---
   var ua = navigator.userAgent || "";
   var isIOS     = /iP(hone|od|ad)/i.test(ua);
   var isAndroid = /Android/i.test(ua);
@@ -101,66 +93,60 @@
   var isIG      = /Instagram/i.test(ua);
   var isFB      = /(FBAN|FBAV)/i.test(ua);
   var isInApp   = isTikTok || isIG || isFB || /Line|Twitter|Snapchat|Pinterest/i.test(ua);
-
-  // Показать диагностику
   document.getElementById('ua').textContent = ua;
 
-  // Технические функции — НЕ заменяем текущую вкладку (кроме intent на Android)
+  // --- Утилиты ---
+  function show(id){ var el=document.getElementById(id); if(el) el.classList.remove('hidden'); }
+  function hide(id){ var el=document.getElementById(id); if(el) el.classList.add('hidden'); }
+
   function openAppSoft(){
-    // скрытая ссылка — не уводит страницу, но вызывает системный промпт
-    var a = document.createElement('a');
-    a.href = TG_DEEP; a.style.display='none'; document.body.appendChild(a); a.click();
-    setTimeout(function(){ a.remove(); }, 1000);
+    // «мягкий» вызов приложения (не закрывает текущую вкладку)
+    var a=document.createElement('a'); a.href=TG_DEEP; a.style.display='none';
+    document.body.appendChild(a); a.click(); setTimeout(function(){a.remove();},1000);
   }
   function openWebNew(){ // всегда новая вкладка
-    try{ window.open(TG_WEB, '_blank', 'noopener,noreferrer'); }
-    catch(e){ /* если заблокировано — попробуем в этой вкладке */ window.location.href = TG_WEB; }
+    try{ window.open(TG_WEB,'_blank','noopener,noreferrer'); }
+    catch(e){ location.href = TG_WEB; }
   }
-  function openIntent(){ // только для Android, может заменить вкладку (это ОК для Android)
-    try{ window.location.href = INTENT; }catch(e){}
-  }
-  function copyLink(idToShow){
+  function openIntent(){ try{ location.href = INTENT; }catch(e){} }
+  function copyLink(){
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(TG_WEB).then(function(){
-        var el = document.getElementById(idToShow); if (el) el.style.display = '';
-      }).catch(function(){});
+      navigator.clipboard.writeText(TG_WEB).then(function(){ show('msgOk'); }).catch(function(){});
     }
   }
 
-  // === Авто-поведение при загрузке ===
-  (function init(){
+  // --- Конфигурация UI по платформе ---
+  if (isIOS && isInApp){                // iPhone в TikTok/IG/FB
+    show('topHint');
+    show('iosInappNote');
+    // Скрываем кнопки, которые не работают надёжно в этом режиме
+    hide('btnOpenApp');                 // deep-link не показываем
+    hide('btnOpenWeb');                 // авто открытие заменяем инструкцией
+    show('msgWarn');
+    // Но оставляем «Скопировать ссылку»
+  } else {
+    // Внешние браузеры iOS/Android и Android in-app — всё показываем
+    // можно авто-помочь пользователю
     if (!isInApp){
-      // Внешние браузеры: мягко пытаемся открыть приложение, а веб — в новой вкладке
       setTimeout(openAppSoft, 120);
-      setTimeout(openWebNew, 900);
-    } else {
-      if (isAndroid){
-        // Android WebView: intent часто работает; лэндинг остаётся доступен (назад — и он на месте)
-        setTimeout(openIntent, 200);
-        setTimeout(openWebNew, 1200);
-      } else if (isIOS){
-        // iOS TikTok/IG/FB: показываем верхнюю подсказку + оверлей
-        document.getElementById('topHint').style.display = '';
-        document.getElementById('overlay').style.display = '';
-        copyLink('ovCopied');                         // автокопирование
-        setTimeout(openWebNew, 350);                  // пробуем открыть t.me в новой вкладке
-      } else {
-        setTimeout(openWebNew, 500);
-      }
+      if (isAndroid) setTimeout(openIntent, 500);
+      setTimeout(openWebNew, 1200);
+    } else if (isAndroid){
+      setTimeout(openIntent, 200);
+      setTimeout(openWebNew, 1000);
     }
-  })();
+  }
 
-  // === Кнопки на странице ===
-  document.getElementById('btnOpenApp').onclick = function(e){ e.preventDefault(); openAppSoft(); };
-  document.getElementById('btnOpenWeb').onclick = function(e){ e.preventDefault(); openWebNew(); };
-  document.getElementById('btnCopy').onclick    = function(e){ e.preventDefault(); copyLink('msgOk'); };
+  // --- Обработчики кнопок ---
+  var b1=document.getElementById('btnOpenApp');
+  if (b1) b1.onclick=function(e){ e.preventDefault(); openAppSoft(); };
 
-  // === Кнопки на оверлее (iOS in-app) ===
-  document.getElementById('btnSafari').onclick = function(e){ e.preventDefault(); openWebNew(); };
-  document.getElementById('btnTryApp').onclick = function(e){ e.preventDefault(); openAppSoft(); };
+  var b2=document.getElementById('btnOpenWeb');
+  if (b2) b2.onclick=function(e){ e.preventDefault(); openWebNew(); };
 
-  // Доп. предупреждение, если мы в in-app
-  if (isInApp) document.getElementById('msgWarn').style.display = '';
+  var b3=document.getElementById('btnCopy');
+  if (b3) b3.onclick=function(e){ e.preventDefault(); copyLink(); };
+
 })();
 </script>
 
