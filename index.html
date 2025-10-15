@@ -4,53 +4,83 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Opening Telegram…</title>
-
-<!-- 1) Попытка открыть сразу приложение Telegram -->
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding:24px;max-width:720px;margin:0 auto}
+  .card{border:1px solid #e5e7eb;border-radius:12px;padding:20px;margin-top:16px}
+  .btn{display:inline-block;margin:10px 6px 0 0;padding:12px 16px;border-radius:10px;text-decoration:none}
+  .primary{background:#229ED9;color:#fff}
+  .ghost{border:1px solid #cbd5e1;color:#111}
+  .ok{color:#059669}
+</style>
 <script>
-  (function () {
-    var invite = "UfY7u-enQmYxMGI0";                   // твой код приглашения
-    var tgDeep = "tg://join?invite=" + invite;         // прямой deeplink в приложение
-    var webFallback = "https://t.me/+" + invite;       // fallback на веб-страницу TG
+(function () {
+  var invite = "UfY7u-enQmYxMGI0";                    // ТВОЙ код
+  var tgDeep = "tg://join?invite=" + invite;
+  var webFallback = "https://t.me/+" + invite;
+  var androidIntent = "intent://join?invite=" + invite +
+    "#Intent;scheme=tg;package=org.telegram.messenger;" +
+    "S.browser_fallback_url=" + encodeURIComponent(webFallback) + ";end";
 
-    // Android intent (если webview поддерживает)
-    var intent = "intent://join?invite=" + invite +
-      "#Intent;scheme=tg;package=org.telegram.messenger;" +
-      "S.browser_fallback_url=" + encodeURIComponent(webFallback) + ";end";
+  var ua = navigator.userAgent || "";
+  var isIOS = /iP(hone|od|ad)/i.test(ua);
+  var isAndroid = /Android/i.test(ua);
+  var isInApp = /(FBAN|FBAV|Instagram|Line|Twitter|TikTok)/i.test(ua);
 
-    // 1) Сначала пробуем tg:// (iOS/Android)
-    function openTG() { window.location.replace(tgDeep); }
+  // Попытка открыть приложение
+  function tryOpenApp(){
+    try { window.location.replace(tgDeep); } catch(e){}
+  }
 
-    // 2) Если не сработало за ~800 мс — пробуем intent:// (Android Chrome),
-    //    ещё через 800 мс — уходим на https://t.me/... (универсальный веб)
-    setTimeout(function(){ 
-      if (/Android/i.test(navigator.userAgent)) {
-        window.location.replace(intent);
+  // Основная логика: сначала deep link, потом intent (Android), потом веб
+  if (!isInApp) {
+    tryOpenApp();
+    if (isAndroid) setTimeout(function(){ location.replace(androidIntent); }, 700);
+    setTimeout(function(){ location.replace(webFallback); }, 1400);
+  } else {
+    // На iOS внутри TikTok/IG/FB — принудительно в приложение нельзя.
+    // Делаем удобный сценарий: автокопируем ссылку + даём кнопки.
+    document.addEventListener("DOMContentLoaded", function(){
+      var copied = false;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(webFallback).then(function(){ 
+          copied = true; 
+          var el = document.getElementById('copied'); 
+          if (el) el.textContent = "Ссылка скопирована в буфер — вставьте в Safari.";
+        }).catch(function(){});
       }
-    }, 800);
-
-    setTimeout(function(){
-      window.location.replace(webFallback);
-    }, 1600);
-
-    // Запускаем сразу, чтобы клик "Открыть" в TikTok считался жестом пользователя
-    openTG();
-
-    // Повторная попытка, если webview вернулось на страницу
-    document.addEventListener("visibilitychange", function(){
-      if (!document.hidden) openTG();
+      // Попробуем открыть веб-предпросмотр (чтобы пользователь нажал JOIN вручную)
+      // В ряде случаев TikTok даст «Открыть в браузере», что и нужно.
+      setTimeout(function(){
+        try {
+          window.open(webFallback, "_blank", "noopener,noreferrer");
+        } catch(e){}
+      }, 300);
     });
-  })();
-</script>
+  }
 
-<!-- Минимальный fallback, если скрипты отключены -->
+  // Если вернулись на страницу (пользователь закрыл оверлей), повторим попытку
+  document.addEventListener("visibilitychange", function(){
+    if (!document.hidden && !isInApp) tryOpenApp();
+  });
+})();
+</script>
+</head>
+<body>
+<h2>LEMEXI Creative Studio</h2>
+<div class="card">
+  <p id="copied" class="ok"></p>
+  <p>Если страницу открыл TikTok/Instagram и не получается перейти:</p>
+  <ol>
+    <li>Нажмите <b>⋯</b> в правом верхнем углу.</li>
+    <li>Выберите <b>«Открыть в браузере / Open in browser»</b>.</li>
+    <li>Если нужно — вставьте скопированную ссылку в Safari: <code>https://t.me/+UfY7u-enQmYxMGI0</code></li>
+  </ol>
+  <a class="btn primary" href="tg://join?invite=UfY7u-enQmYxMGI0">Открыть в Telegram</a>
+  <a class="btn ghost" href="https://t.me/+UfY7u-enQmYxMGI0" target="_blank" rel="noopener">Открыть через веб</a>
+</div>
+
 <noscript>
   <meta http-equiv="refresh" content="0; url=https://t.me/+UfY7u-enQmYxMGI0">
 </noscript>
-</head>
-<body>
-<p>Redirecting to Telegram… Если не сработало, нажмите
-  <a href="tg://join?invite=UfY7u-enQmYxMGI0">Открыть в Telegram</a> или
-  <a href="https://t.me/+UfY7u-enQmYxMGI0">через веб</a>.
-</p>
 </body>
 </html>
