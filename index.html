@@ -2,124 +2,158 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LEMEXI — вход в Telegram</title>
-<meta name="theme-color" content="#229ED9">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LEMEXI — вступить в Telegram</title>
+<meta name="theme-color" content="#000000">
+
+<!-- Превью -->
 <meta property="og:title" content="LEMEXI Creative Studio — Telegram">
-<meta property="og:description" content="Нажмите, чтобы подать заявку на вступление">
+<meta property="og:description" content="Подайте заявку на вступление (закрытая группа, одобрение модератора).">
 <meta property="og:type" content="website">
 
 <style>
-  :root { --tg:#229ED9; --fg:#0f172a; --muted:#475569; --bd:#e2e8f0; }
+  :root{
+    --bg:#0b0b0f; --card:#121217; --fg:#f7f9fc; --muted:#98a2b3; --line:#1f2330;
+    --accent:#ff2c55; /* TikTok red */
+    --accent2:#20d5ec; /* TikTok cyan */
+  }
+  *{box-sizing:border-box}
   html,body{height:100%}
   body{
+    margin:0; background:linear-gradient(180deg,var(--bg),#0d0d12 50%,var(--bg) 100%);
     font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    margin:0; color:var(--fg); background:#fff;
-    display:flex; align-items:center; justify-content:center; padding:20px;
+    color:var(--fg); display:flex; align-items:center; justify-content:center; padding:20px;
   }
-  .wrap{max-width:720px; width:100%}
+  .wrap{width:100%; max-width:820px}
+  .tbar{
+    background:#09090c; border:1px solid var(--line); border-radius:16px; padding:14px 16px;
+    margin:0 auto 14px; display:flex; align-items:center; gap:10px; max-width:820px
+  }
+  .tbar b{color:#fff}
   .card{
-    border:1px solid var(--bd); border-radius:16px; padding:20px;
-    box-shadow:0 6px 30px rgba(2,8,23,.05);
+    background:var(--card); border:1px solid var(--line); border-radius:18px; padding:24px;
+    box-shadow:0 24px 80px rgba(0,0,0,.35)
   }
-  h1{font-size:22px;margin:0 0 6px}
-  p{margin:8px 0;color:var(--muted);line-height:1.45}
+  h1{margin:0 0 6px; font-size:22px}
+  p{margin:8px 0; color:var(--muted); line-height:1.5}
+  .buttons{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
   .btn{
-    display:inline-block; padding:14px 18px; border-radius:12px;
-    text-decoration:none; font-weight:600; margin:8px 8px 0 0; border:1px solid var(--bd);
+    display:inline-block; padding:14px 18px; border-radius:14px; text-decoration:none;
+    font-weight:700; letter-spacing:.2px; border:1px solid var(--line); transition:transform .06s ease;
   }
-  .btn-primary{ background:var(--tg); color:#fff; border-color:var(--tg) }
-  .btn-ghost{ color:var(--fg); background:#fff }
-  .hint{font-size:14px;color:#16a34a;margin-top:6px}
-  .diag{font-size:12px;color:#94a3b8;margin-top:12px;word-break:break-all}
-  ol{margin:10px 0 0 18px;padding:0}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{
+    color:#fff; border:none;
+    background:
+      linear-gradient(135deg,var(--accent),var(--accent) 48%,var(--accent2) 100%);
+    box-shadow:0 8px 24px rgba(255,44,85,.35);
+  }
+  .btn-ghost{background:#151521; color:#e6e8ee}
+  .btn-outline{background:transparent; color:#e6e8ee}
+  .hint{font-size:14px; color:#86efac; margin-top:8px}
+  .warn{font-size:14px; color:#fda4af; margin:8px 0 0}
+  .ua{margin-top:10px; font-size:12px; color:#6b7280; word-break:break-all}
+  .badge{display:inline-block; padding:4px 10px; border-radius:999px; background:#151521; color:#cbd5e1; font-size:12px; border:1px solid var(--line)}
+  .hr{height:1px; background:var(--line); margin:16px 0}
+  .logo{font-weight:900; letter-spacing:.5px}
 </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Верхняя плашка-подсказка (покажем только в iOS/TikTok) -->
+    <div id="inappHint" class="tbar" style="display:none">
+      <span class="badge">iPhone · TikTok</span>
+      <div>Если ссылка не запускает Telegram: нажмите <b>⋯</b> (вверху) → <b>Open in browser</b> → <b>JOIN</b>.</div>
+    </div>
+
+    <div class="card">
+      <div class="badge logo">LEMEXI</div>
+      <h1>Вступить в «LEMEXI Creative Studio»</h1>
+      <p>Группа закрытая. Вступление — <b>по одобрению</b>. Ссылка открывается в Telegram-приложении; если вы внутри TikTok на iPhone — откройте во внешнем браузере.</p>
+
+      <div class="buttons">
+        <a class="btn btn-primary" id="openApp" href="#">Открыть в Telegram</a>
+        <a class="btn btn-ghost" id="openWeb" href="#">Открыть через веб (t.me)</a>
+        <a class="btn btn-outline" id="copy" href="#">Скопировать ссылку</a>
+      </div>
+
+      <div id="copied" class="hint" style="display:none">Ссылка скопирована — вставьте в Safari при необходимости.</div>
+      <div id="warn" class="warn" style="display:none">Этот браузер блокирует авто-переходы. Нажмите <b>Open in browser</b> в меню ⋯, затем <b>JOIN</b>.</div>
+
+      <div class="hr"></div>
+      <p class="ua" id="ua"></p>
+    </div>
+  </div>
 
 <script>
-(function () {
-  // ======== ПАРАМЕТРЫ ========
-  var INVITE = "UfY7u-enQmYxMGI0";                 // твой приватный код
-  var TG_DEEP = "tg://join?invite=" + INVITE;      // приложение
-  var TG_WEB  = "https://t.me/+" + INVITE;         // веб-фоллбек
+(function(){
+  // --- Настройки именно для твоей группы ---
+  var INVITE = "UfY7u-enQmYxMGI0"; // приватный код приглашения (по заявкам)
+  var TG_DEEP = "tg://join?invite=" + INVITE;      // открыть приложение
+  var TG_WEB  = "https://t.me/+" + INVITE;         // веб-просмотр (форма JOIN)
   var INTENT  = "intent://join?invite=" + INVITE +
     "#Intent;scheme=tg;package=org.telegram.messenger;" +
     "S.browser_fallback_url=" + encodeURIComponent(TG_WEB) + ";end";
 
-  // ======== ДЕТЕКТ ========
+  // --- Детект окружения ---
   var ua = navigator.userAgent || "";
-  var isIOS = /iP(hone|od|ad)/i.test(ua);
+  var isIOS     = /iP(hone|od|ad)/i.test(ua);
   var isAndroid = /Android/i.test(ua);
-  var isInApp = /(FBAN|FBAV|Instagram|Line|Twitter|TikTok|Pinterest|Snapchat)/i.test(ua);
+  var isTikTok  = /TikTok/i.test(ua);
+  var isIG      = /Instagram/i.test(ua);
+  var isFB      = /(FBAN|FBAV)/i.test(ua);
+  var isInApp   = isTikTok || isIG || isFB || /Line|Twitter|Snapchat|Pinterest/i.test(ua);
 
-  // ======== ФУНКЦИИ ========
+  // Выведем UA (для отладки)
+  document.getElementById('ua').textContent = ua;
+
+  // Покажем верхнюю подсказку только для iOS внутри TikTok
+  if (isIOS && isTikTok) document.getElementById('inappHint').style.display = '';
+
   function openDeep(){ try{ location.replace(TG_DEEP); }catch(e){} }
   function openIntent(){ try{ location.replace(INTENT); }catch(e){} }
-  function openWeb(){ try{ location.href = TG_WEB; }catch(e){} }
-
+  function openWeb(){ try{ window.open(TG_WEB, "_blank", "noopener,noreferrer"); }catch(e){ location.href = TG_WEB; } }
   function copyLink(){
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(TG_WEB).then(function(){
-        var el = document.getElementById('copied');
-        if (el) { el.textContent = "Ссылка скопирована — вставьте в Safari при необходимости."; el.className = "hint"; }
+        var el = document.getElementById('copied'); el.style.display = ''; 
       }).catch(function(){});
     }
   }
 
-  function run(){
-    if (!isInApp) {
-      // Внешние браузеры — автозапуск
+  // Авто-стратегия при загрузке страницы
+  (function autoRun(){
+    if (!isInApp){
+      // Внешние браузеры — максимально агрессивно
       openDeep();
-      if (isAndroid) setTimeout(openIntent, 600);
-      setTimeout(openWeb, 1300);
-      return;
-    }
-    // Встроенные webview соцсетей
-    if (isAndroid) {
-      setTimeout(openIntent, 200);
-      setTimeout(openWeb, 1200);
-    } else if (isIOS) {
-      // iOS в TikTok/IG/FB: deeplink блокируют — готовим выход в Safari
-      copyLink();
-      setTimeout(function(){ try{ window.open(TG_WEB, "_blank", "noopener,noreferrer"); }catch(e){} }, 300);
+      if (isAndroid) setTimeout(openIntent, 500);
+      setTimeout(function(){ location.href = TG_WEB; }, 1100);
     } else {
-      setTimeout(openWeb, 300);
+      // Встроенные webview соцсетей
+      if (isAndroid){
+        // На Android webview intent часто проходит
+        setTimeout(openIntent, 200);
+        setTimeout(function(){ location.href = TG_WEB; }, 1000);
+      } else if (isIOS){
+        // iOS в TikTok/IG/FB блокирует tg:// → аккуратно показываем подсказку и открываем t.me в новой вкладке
+        copyLink();
+        setTimeout(openWeb, 300);
+        document.getElementById('warn').style.display = '';
+      } else {
+        setTimeout(function(){ location.href = TG_WEB; }, 300);
+      }
     }
-  }
+  })();
 
-  document.addEventListener("visibilitychange", function(){
-    if (!document.hidden && !isInApp) openDeep();
-  });
-
-  window._LEMEXI = { openDeep: openDeep, openWeb: openWeb, copy: copyLink };
-  run();
+  // Кнопки
+  document.getElementById('openApp').onclick = function(e){ e.preventDefault(); openDeep(); };
+  document.getElementById('openWeb').onclick = function(e){ e.preventDefault(); openWeb(); };
+  document.getElementById('copy').onclick    = function(e){ e.preventDefault(); copyLink(); };
 })();
 </script>
-</head>
-<body>
-  <div class="wrap">
-    <div class="card">
-      <h1>LEMEXI Creative Studio</h1>
-      <p>Сейчас откроется Telegram для подачи заявки на вступление. Если вы в приложении TikTok/Instagram на iPhone — нажмите <b>⋯ → Open in browser</b>, затем <b>JOIN</b>.</p>
 
-      <a class="btn btn-primary" href="tg://join?invite=UfY7u-enQmYxMGI0" onclick="_LEMEXI.openDeep();return false;">Открыть в Telegram</a>
-      <a class="btn btn-ghost"   href="https://t.me/+UfY7u-enQmYxMGI0" target="_blank" rel="noopener" onclick="_LEMEXI.openWeb();">Открыть через веб</a>
-      <a class="btn btn-ghost"   href="#" onclick="_LEMEXI.copy();return false;">Скопировать ссылку</a>
-
-      <p id="copied"></p>
-      <div style="border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-top:10px">
-        <p><b>Если внутри TikTok на iPhone не пускает:</b></p>
-        <ol>
-          <li>Нажмите <b>⋯</b> вверху справа.</li>
-          <li>Выберите <b>Open in browser</b> (Открыть в браузере).</li>
-          <li>Нажмите <b>JOIN</b> — заявка уйдёт на одобрение.</li>
-        </ol>
-        <p class="diag" id="ua"></p>
-      </div>
-    </div>
-  </div>
-
-<script>document.getElementById('ua').textContent = navigator.userAgent;</script>
-
-<noscript><meta http-equiv="refresh" content="0; url=https://t.me/+UfY7u-enQmYxMGI0"></noscript>
+<noscript>
+  <meta http-equiv="refresh" content="0; url=https://t.me/+UfY7u-enQmYxMGI0">
+</noscript>
 </body>
 </html>
