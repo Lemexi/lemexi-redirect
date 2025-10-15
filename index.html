@@ -45,7 +45,16 @@
   .btn-outline{background:transparent;color:#e6edff}
   .btn[aria-disabled="true"]{opacity:.55;pointer-events:none;filter:grayscale(.15)}
   .ok{color:var(--ok);font-size:14px;margin-top:6px;display:none}
-  .warn{color:var(--warn);font-size:14px;margin-top:12px;display:none}
+  .instruction{
+    margin-top:18px;
+    color:#9eb3da;
+    font-size:14px;
+    line-height:1.5;
+    background:#101b35;
+    border-radius:12px;
+    padding:14px 16px;
+    border:1px solid var(--line);
+  }
 </style>
 </head>
 <body>
@@ -65,13 +74,15 @@
       <a class="btn btn-outline" id="btnCopy" href="#">Скопировать ссылку</a>
     </div>
 
-    <p id="msgOk" class="ok">Ссылка скопирована — вставьте её в адресную строку Safari/Chrome и нажмите «Перейти».</p>
+    <p id="msgOk" class="ok">Ссылка скопирована — вставьте её в адресную строку Safari или Chrome и нажмите «Перейти».</p>
 
-    <p id="msgWarn" class="warn">
-      Если кнопка не срабатывает — это связано с последними обновлениями TikTok или настройками устройства.<br>
-      Нажмите <b>три точки</b> вверху → <b>Open in browser</b> (Открыть в браузере), затем — <b>JOIN</b>.<br>
-      Либо скопируйте ссылку и вставьте её вручную.
-    </p>
+    <div class="instruction" id="instruction">
+      ⚠️ Если кнопка не срабатывает — это не ошибка сайта.<br>
+      Это связано с новыми обновлениями TikTok или настройками вашего устройства.<br><br>
+      ▪ Нажмите <b>три точки</b> вверху справа → <b>Открыть в браузере</b> (Open in browser).<br>
+      ▪ После этого Telegram откроется автоматически.<br>
+      ▪ Или просто скопируйте ссылку и вставьте её в свой браузер вручную.
+    </div>
   </div>
 </div>
 
@@ -105,7 +116,6 @@
 
   if (isIOS && isInApp){
     btnOpenApp.setAttribute('aria-disabled','true');
-    document.getElementById('msgWarn').style.display='';
   }
 
   btnOpenApp.onclick = function(e){
