@@ -36,7 +36,7 @@
   .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
   .btn{
     display:inline-block;padding:16px 20px;border-radius:14px;text-decoration:none;
-    font-weight:800;letter-spacing:.2px;border:1px solid var(--line);user-select:none
+    font-weight:800;letter-spacing:.2px;border:1px solid var(--line);user-select:none;cursor:pointer
   }
   .btn-primary{
     color:#fff;border:none;background:linear-gradient(135deg,var(--pri),var(--pri2));
@@ -46,14 +46,8 @@
   .btn[aria-disabled="true"]{opacity:.55;pointer-events:none;filter:grayscale(.15)}
   .ok{color:var(--ok);font-size:14px;margin-top:6px;display:none}
   .instruction{
-    margin-top:18px;
-    color:#9eb3da;
-    font-size:14px;
-    line-height:1.5;
-    background:#101b35;
-    border-radius:12px;
-    padding:14px 16px;
-    border:1px solid var(--line);
+    margin-top:18px;color:#9eb3da;font-size:14px;line-height:1.5;
+    background:#101b35;border-radius:12px;padding:14px 16px;border:1px solid var(--line);
   }
 </style>
 </head>
@@ -88,10 +82,12 @@
 
 <script>
 (function(){
+  // ====== Настройки ======
   var INVITE = "UfY7u-enQmYxMGI0";
   var TG_DEEP = "tg://join?invite=" + INVITE;
   var TG_WEB  = "https://t.me/+" + INVITE;
 
+  // ====== Детект окружения ======
   var ua = navigator.userAgent || "";
   var isIOS     = /iP(hone|od|ad)/i.test(ua);
   var isTikTok  = /TikTok/i.test(ua);
@@ -99,33 +95,74 @@
   var isFB      = /(FBAN|FBAV)/i.test(ua);
   var isInApp   = isTikTok || isIG || isFB || /Line|Twitter|Snapchat|Pinterest/i.test(ua);
 
+  // ====== Функции ======
   function openAppSoft(){
-    var a=document.createElement('a'); a.href=TG_DEEP; a.style.display='none';
-    document.body.appendChild(a); a.click(); setTimeout(function(){a.remove();},1000);
-  }
-  function copyLink(){
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(TG_WEB).then(function(){
-        document.getElementById('msgOk').style.display='';
-      }).catch(function(){});
-    }
+    var a=document.createElement('a');
+    a.href=TG_DEEP; a.style.display='none';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){a.remove();},800);
   }
 
+  function copyToClipboard(text){
+    // 1) Современный API
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(text);
+    }
+    // 2) Fallback через скрытое textarea
+    return new Promise(function(resolve,reject){
+      try{
+        var ta=document.createElement('textarea');
+        ta.value=text;
+        // максимально надёжно для iOS
+        ta.style.position='fixed'; ta.style.top='-1000px'; ta.style.left='-1000px';
+        ta.setAttribute('readonly','');
+        document.body.appendChild(ta);
+        ta.select(); ta.setSelectionRange(0, ta.value.length);
+        var ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (ok) resolve(); else reject(new Error('execCommand copy failed'));
+      }catch(e){
+        reject(e);
+      }
+    }).catch(function(){
+      // 3) Последний шанс — показать prompt с выделенной ссылкой
+      window.prompt('Скопируйте ссылку (Ctrl/Cmd+C):', text);
+      return Promise.resolve();
+    });
+  }
+
+  // ====== Элементы ======
   var btnOpenApp = document.getElementById('btnOpenApp');
   var btnCopy    = document.getElementById('btnCopy');
+  var msgOk      = document.getElementById('msgOk');
 
+  // В iOS внутри in-app браузеров делаем кнопку открытия неактивной
   if (isIOS && isInApp){
     btnOpenApp.setAttribute('aria-disabled','true');
   }
 
-  btnOpenApp.onclick = function(e){
+  // Обработчики
+  btnOpenApp.addEventListener('click', function(e){
     e.preventDefault();
     if (btnOpenApp.getAttribute('aria-disabled') === 'true') return;
     openAppSoft();
-  };
-  btnCopy.onclick = function(e){ e.preventDefault(); copyLink(); };
+  });
 
-  if (!isInApp) setTimeout(openAppSoft, 150);
+  btnCopy.addEventListener('click', function(e){
+    e.preventDefault();
+    copyToClipboard(TG_WEB).then(function(){
+      msgOk.style.display='';
+      // Визуальный отклик на кнопке
+      var old = btnCopy.textContent;
+      btnCopy.textContent = 'Скопировано ✓';
+      setTimeout(function(){ btnCopy.textContent = old; }, 2000);
+    });
+  });
+
+  // Внешние обычные браузеры — мягкий автозапуск
+  if (!isInApp) {
+    setTimeout(openAppSoft, 150);
+  }
 })();
 </script>
 
